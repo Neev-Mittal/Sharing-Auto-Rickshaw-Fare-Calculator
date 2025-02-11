@@ -65,7 +65,8 @@ double update_fare(int section_distance, int num_passenger, double passenger_far
 int main(){
     int num_passenger, n, total_distance=0, section_distance=0, cumulative_distance=0;
     double passenger_fare[3] = {0.0,0.0,0.0};
-    double total_fare = 25.0;
+    double remaining_fare = 25.0;
+    double total_fare = 25.0; // The minimum fare earned by the autorickshaw driver
 
     printf("Welcome to the Auto Rickshaw!\n");
     printf("How many people are there at the start? 1, 2 or 3?\n");
@@ -91,28 +92,28 @@ int main(){
         section_distance = total_distance - cumulative_distance;
         cumulative_distance = cumulative_distance + section_distance;
 
-        printf("The current section distance = %dm\n", section_distance);
+        printf("\nThe current section distance = %dm\n", section_distance);
         printf("The current total distance = %dm\n", total_distance);
 
         if(total_distance > 1500){
             total_fare = total_fare + update_fare(section_distance, num_passenger, passenger_fare);
         }
         
-        printf("1. New Passenger\n");
-        printf("2. Exiting Passenger");
+l1:     printf("\n1. New Passenger\n");
+        printf("2. Exiting Passenger\n");
+        printf("3. Continue Journey\n");
         scanf("%d", &n);
 
         if(n==1){
             if(num_passenger == 3){
                 printf("The auto rickshaw is already full!\n");
-                printf("The auto rickshaw will resume..");
-                Sleep(2000);
-                continue;
+                Sleep(1000);
+                goto l1;
             }
             num_passenger++;
             if(total_distance < 1500){
                 int fare_distance = 1500-total_distance;
-                passenger_fare[num_passenger-1] = fare_distance * 25.0 / 1500.0 / num_passenger ;
+                passenger_fare[num_passenger-1] = fare_distance * remaining_fare / 1500.0 / num_passenger;
                 for(int i=0; i<num_passenger-1; i++){
                     passenger_fare[i] = passenger_fare[i] - (passenger_fare[num_passenger-1] / (num_passenger-1));
                 }
@@ -129,8 +130,8 @@ int main(){
                 n--;
 
                 printf("The fare for the leaving passenger is Rs%.2f\n", passenger_fare[n]);
-                printf("Press any key to continue...\n");
-                getch();
+                remaining_fare -= passenger_fare[n];
+                passenger_fare[n] = 0.0;
 
                 for(int i=n; i<num_passenger-1; i++){
                     passenger_fare[i] = passenger_fare[i+1];
@@ -139,16 +140,18 @@ int main(){
 
             else{
                 printf("The fare for the leaving passenger is Rs%.2f\n", passenger_fare[0]);
+                passenger_fare[0] = 0.0;
+                break;
             }
             num_passenger--;
+        }
+
+        if(n != 3){
+            goto l1;
         }
         
         
     }while(num_passenger!=0);
-    
-    if(total_fare < 25){
-        total_fare = 25.00;
-    }
     
     printf("The total money earned by the driver = Rs%.2lf\n", total_fare);
     return 0;
