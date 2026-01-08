@@ -8,10 +8,13 @@ Dynamic fare calculator for a sharing auto-rickshaw. Designed for the benifit of
 <li>Project Title: Dynamic Fare Calculator for a Sharing Auto Rickshaw</li>
 <li>Author Name: Neev Mittal</li>
 <li>Project Start Date: 08-01-2025 (DD-MM-YYYY)</li>
-<li>Project Completion Date: 10-01-2025 (DD-MM-YYYY)</li>
-<li>Version: 1.0</li>
+<li>Version: 1.1</li>
 <li>Description: This project dynamically calculates the fare for the passengers in a sharing auto rickshaw based on distance travelled and the number of passengers in the vehicle. The method ensures the benifit of both- the driver and passengers.</li>
 </ul>
 
-Version 2:
-Improved the user experience and fixed a bug related to fare calculation when the distance was less than 1500 meters.
+Version 1.1:
+Improved the user experience.
+Fixed a bug related to fare calculation when the distance was less than 1500 meters.
+Improved how passenger identity is handled.
+Fixed a bug related to fare calculation above 1500 meters
+
